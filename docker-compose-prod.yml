@@ -1,4 +1,4 @@
-version: '3.5'
+version: '2'
 
 services:
   nginx-proxy:
@@ -14,21 +14,20 @@ services:
       - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: bridge
     networks: 
       - nginx-reverse-proxy 
-  nginx-proxy-letsencrypt:
+  letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
-    depends_on:
+    container_name: nginx-proxy-le
+    volumes_from:
       - nginx-proxy
     volumes:
-      - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       DEFAULT_EMAIL: "abdennour@abbi-studio.fr"
+    network_mode: bridge
     networks: 
       - nginx-reverse-proxy 
 
