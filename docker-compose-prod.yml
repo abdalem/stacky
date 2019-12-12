@@ -33,33 +33,33 @@ volumes:
   conf: 
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './conf.d'
+      type: none
+      o: bind
+      device: $PWD/conf.d
   html: 
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './html'
+      type: none
+      o: bind
+      device: $PWD/html
   vhost: 
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './vhost.d'
+      type: none
+      o: bind
+      device: $PWD/vhost.d
   dhparam: 
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './dhparam'
+      type: none
+      o: bind
+      device: $PWD/dhparam
   certs: 
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './certs'
+      type: none
+      o: bind
+      device: $PWD/certs
 
 networks:
   nginx-reverse-proxy:
