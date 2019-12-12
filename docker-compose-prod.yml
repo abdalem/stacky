@@ -30,11 +30,36 @@ services:
       - nginx-reverse-proxy 
 
 volumes:
-  conf:
-  vhost:
-  html:
-  dhparam:
-  certs:
+  conf: 
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './conf.d'
+  html: 
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './html'
+  vhost: 
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './vhost.d'
+  dhparam: 
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './dhparam'
+  certs: 
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './certs'
 
 networks:
   nginx-reverse-proxy:
