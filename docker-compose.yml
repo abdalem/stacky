@@ -31,35 +31,10 @@ services:
 
 volumes:
   conf: 
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $PWD/conf.d
   html: 
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $PWD/html
   vhost: 
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $PWD/vhost.d
   dhparam: 
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $PWD/dhparam
   certs: 
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $PWD/certs
 
 networks:
   nginx-reverse-proxy:
