@@ -1,40 +1,42 @@
-version: '2.4'
+version: "3.8"
 
 services:
   nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
+    image: nginxproxy/nginx-proxy
+    container_name: stacky_nginx-proxy
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - conf:/etc/nginx/conf.d
+      - certs:/etc/nginx/certs
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam
-      - certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks: 
-      - nginx-reverse-proxy 
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-proxy-le
-    volumes_from:
-      - nginx-proxy
+    networks:
+      - nginx-reverse-proxy
+  portainer:
+    image: portainer/portainer-ce
+    container_name: stacky_portainer
+    restart: always
     volumes:
-      - certs:/etc/nginx/certs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    expose:
+      - 9000
     environment:
-      DEFAULT_EMAIL: "example@example.com"
-    networks: 
-      - nginx-reverse-proxy 
+      VIRTUAL_PORT: "9000"
+      VIRTUAL_HOST: ${PORTAINER_HOST:-portainer.localhost}
+      LETSENCRYPT_HOST: ${PORTAINER_HOST:-portainer.localhost}
+    depends_on:
+      - nginx-proxy
+    networks:
+      - nginx-reverse-proxy
 
 volumes:
-  conf: 
-  html: 
-  vhost: 
-  dhparam: 
-  certs: 
+  html:
+  vhost:
+  certs:
+  portainer_data:
 
 networks:
   nginx-reverse-proxy:
