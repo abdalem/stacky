@@ -4,10 +4,9 @@ services:
   acme-companion:
     image: nginxproxy/acme-companion
     container_name: stacky_acme-companion
+    volumes_from:
+      - nginx-proxy
     volumes:
-      - certs:/etc/nginx/certs
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
